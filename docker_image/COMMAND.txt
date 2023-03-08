@@ -1,0 +1,5 @@
+docker container run -p 8000:8000 --rm --network host -it chpy_api:latest
+
+
+apk add --no-cache curl
+curl -X GET -i http://127.0.0.1:8000/

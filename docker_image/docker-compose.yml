@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+    chpy_api:
+        image: chpy_api:latest
+        container_name: chpy_api
+
+
