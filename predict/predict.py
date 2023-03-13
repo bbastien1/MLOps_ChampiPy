@@ -6,6 +6,7 @@ import pathlib
 import requests
 
 from urllib import request
+from urllib.error import HTTPError
 from tensorflow import keras
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
@@ -17,24 +18,31 @@ def load_index_to_label(path: str = ''):
     index_to_class_label = pd.read_csv('.\\ressources\\final_500_targets.csv', sep = ';')
     return index_to_class_label
 
-def load_model(path: str = '.\model\\'):
-    # try:
+
+def load_model(path: str = '.\\predict\\model\\'):
     model = keras.models.load_model(path)
     return model
-    # except OSError:
-    # print('directory {} not found'.format(path))
+
 
 def check_file(path):
     ret = False
     
+    # Check HTTP file exist
+    if path.lower().startswith('http'):
+        try:
+            r = request.urlopen(path)  # response
+            if r.getcode() == 200:
+                ret = True
+        except HTTPError as err:
+            if err.code == 404:
+                ret = False
     # Check file exist
-    if pathlib.Path(path).is_file():
-        ret = True
     else:
-        r = request.urlopen(path)  # response
-        if r.getcode() == 200:
+        if pathlib.Path(path).is_file():
             ret = True
+        
     return ret
+
 
 def image_to_array(upload_file):
 
@@ -49,7 +57,7 @@ def image_to_array(upload_file):
     return np.expand_dims(img_array, axis = 0) 
 
 
-def get_predictions(upload_file: str = "../images/zz106026.jpg", nb_preds: int=1):
+def get_predictions(upload_file: str = "../images/106026.jpg", nb_preds: int=1):
 
     # Check file type
     if not upload_file.lower().endswith(('.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.gif')) :
@@ -72,17 +80,9 @@ def get_predictions(upload_file: str = "../images/zz106026.jpg", nb_preds: int=1
     # create a list containing the class labels
     class_labels = load_index_to_label()
 
-    # find the top 3 classes
+    # find the top X classes
     df_preds = pd.DataFrame({"name": class_labels.iloc[preds_sorted[0,-nb_preds:],1],
                              "proba": preds_sorted_proba[0, -nb_preds:]*100})
     df_preds = df_preds.sort_values('proba', axis=0, ascending=False)
 
-    return df_preds
-
-def get_wikilink(pred_name):
-    # p = str(class_labels.iloc[preds_sorted[0,-1],1])
-    link = 'https://fr.wikipedia.org/wiki/' + str(pred_name.lower().replace(' ', '_'))
-    return link
-
-predictions = get_predictions(upload_file = 'https://images.mushroomobserver.org/320/98097.jpg', nb_preds = 4)
-print(predictions)
+    return df_preds.to_json(orient="records")
