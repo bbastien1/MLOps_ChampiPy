@@ -61,7 +61,7 @@ def get_predictions(upload_file: str = "../images/106026.jpg", nb_preds: int=1):
 
     # Check file type
     if not upload_file.lower().endswith(('.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.gif')) :
-        raise TypeError('The file must be an image')
+        raise ValueError('The file must be an image')
     
     if not check_file(upload_file):
         raise FileNotFoundError('file {} not found'.format(upload_file))
