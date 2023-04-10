@@ -85,4 +85,5 @@ def get_predictions(upload_file: str = "../images/106026.jpg", nb_preds: int=1):
                              "proba": preds_sorted_proba[0, -nb_preds:]*100})
     df_preds = df_preds.sort_values('proba', axis=0, ascending=False)
 
-    return df_preds.to_json(orient="records")
+    #return df_preds.to_json(orient="records")
+    return df_preds.to_dict('records')

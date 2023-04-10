@@ -5,8 +5,8 @@ from pandas import DataFrame
 def get_database():
 
     # Provide the mongodb atlas url to connect python to mongodb using pymongo
-    CONNECTION_STRING = "mongodb+srv://champipy:CCeD3AyOtqxvw2iJ@cluster0.iul9opn.mongodb.net/?retryWrites=true&w=majority"
-
+    #CONNECTION_STRING = "mongodb+srv://champipy:CCeD3AyOtqxvw2iJ@cluster0.iul9opn.mongodb.net/?retryWrites=true&w=majority"
+    CONNECTION_STRING = "mongodb+srv://champipy:CCeD3AyOtqxvw2iJ@cluster0.iul9opn.mongodb.net/champipy_db"
     # Create a connection using MongoClient. You can import MongoClient or use pymongo.MongoClient
     client = MongoClient(CONNECTION_STRING)
     db = client.champipy_db
@@ -43,23 +43,40 @@ def create_users():
 
 def get_users():
     chpy_db = get_database()
-    collection_name = chpy_db["users"]
+    collection_users = chpy_db["users"]
     
-    item_details = collection_name.find()
-    items_df = DataFrame(item_details)
-    print(items_df)
+    users_details = collection_users.find()
+    users_df = DataFrame(users_details)
     # for item in item_details:
     # # This does not give a very readable output
     #     print(item)
+    return users_df.to_json(orient="records")
 
 
-# This is added so that many files can reuse the function get_database()
+def get_user(user:str):
+    Database = get_database()
+    collection_users = Database["users"]
+    user_query = { "username": user }
+    user = collection_users.find_one(user_query)
+    print('username :', user['username'])
+    return user["username"]    
+
+def get_user_pwd(user:str):
+    Database = get_database()
+    collection_users = Database["users"]
+    user_query = { "username": user }
+    user = collection_users.find_one(user_query)
+    
+    return user["hashed_password"]
+
+
 if __name__ == "__main__":   
 
     # Get the database
+    print("TEST !")
     chpy_db = get_database()
     collection_user = chpy_db["users"]
     print(chpy_db.list_collection_names())
-
-    get_users()
+    print("return : " + get_user('alice'))
+    print("return : " + get_user_pwd('alice'))
     #print(dbname)
