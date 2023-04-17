@@ -22,3 +22,8 @@ Lancement de l'API :
 
 [Lien vers la documentation de l'API](http://localhost:8000/docs)
 ## Installation
+
+## Test
+Lancement de pytest :
+
+>```python -m pytest test\predict_test.py```
