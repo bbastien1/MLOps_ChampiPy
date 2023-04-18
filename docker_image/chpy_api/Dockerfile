@@ -12,4 +12,4 @@ RUN pip3 install -r requirements.txt
 
 EXPOSE 8000
 
-CMD uvicorn api.main:api --reload
+CMD uvicorn api.main:api --host 0.0.0.0 --reload

@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import pathlib
 import requests
+import os.path
 
 from urllib import request
 from urllib.error import HTTPError
@@ -14,7 +15,7 @@ from io import BytesIO
 
 
 def load_index_to_label():
-    file = '.\\predict\\target_name.csv'
+    file = os.path.join("predict", "target_name.csv")
     
     if not check_file(file):
         raise FileNotFoundError('file {} not found'.format(file))
@@ -24,7 +25,7 @@ def load_index_to_label():
     return index_to_class_label
 
 
-def load_model(path: str = '.\\predict\\model\\'):
+def load_model(path: str = os.path.join("predict", "model")):
     model = keras.models.load_model(path)
     return model
 
@@ -67,8 +68,6 @@ def image_to_array(upload_file):
 
 def get_predictions(upload_file, nb_preds: int=1):
 
-    print("upload file :", upload_file)
-
     # Check file type
     if not upload_file.lower().endswith(('.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.gif')) :
         raise ValueError('The file must be an image')
@@ -79,18 +78,18 @@ def get_predictions(upload_file, nb_preds: int=1):
     # Check nb_preds value
     if not type(nb_preds) == int:
         raise TypeError('nb_preds must be an integer')
-    print("upload OK")
+
     img = image_to_array(upload_file)
     model = load_model()
-    print("load_model OK")
+
     preds = model.predict(img)
-    print("preds OK")
+
     preds_sorted_proba = np.sort(preds)
     preds_sorted = np.argsort(preds, axis = -1)
-    print("preds_sorted OK")
+
     # create a list containing the class labels
     class_labels = load_index_to_label()
-    print("class_label OK")
+
     # find the top X classes
     df_preds = pd.DataFrame({"name": class_labels.iloc[preds_sorted[0,-nb_preds:],1],
                              "proba": preds_sorted_proba[0, -nb_preds:]*100})
