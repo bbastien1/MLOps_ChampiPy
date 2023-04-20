@@ -14,8 +14,9 @@ from PIL import Image
 from io import BytesIO
 
 
-def load_index_to_label():
-    file = os.path.join("predict", "target_name.csv")
+def load_index_to_label(root_dir: str = ""):
+    
+    file = os.path.join(root_dir, "predict", "target_name.csv")
     
     if not check_file(file):
         raise FileNotFoundError('file {} not found'.format(file))
@@ -25,7 +26,9 @@ def load_index_to_label():
     return index_to_class_label
 
 
-def load_model(path: str = os.path.join("predict", "model")):
+def load_model(root_dir: str = ""):
+    path = os.path.join(root_dir, "predict", "model")
+
     model = keras.models.load_model(path)
     return model
 
@@ -79,8 +82,10 @@ def get_predictions(upload_file, nb_preds: int=1):
     if not type(nb_preds) == int:
         raise TypeError('nb_preds must be an integer')
 
+    root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+
     img = image_to_array(upload_file)
-    model = load_model()
+    model = load_model(root_dir)
 
     preds = model.predict(img)
 
@@ -88,7 +93,7 @@ def get_predictions(upload_file, nb_preds: int=1):
     preds_sorted = np.argsort(preds, axis = -1)
 
     # create a list containing the class labels
-    class_labels = load_index_to_label()
+    class_labels = load_index_to_label(root_dir)
 
     # find the top X classes
     df_preds = pd.DataFrame({"name": class_labels.iloc[preds_sorted[0,-nb_preds:],1],

@@ -1,10 +1,35 @@
 # Documentation du projet MLOps_ChampiPy
 
+## ChampiPy
+
+ChampiPy est un projet de la formation Data Scientist, le but est de prédire l'espèce d'un champignon via une photo.
+
 ## Overview
 
-Repository du projet ChampiPy dans le cadre de la formation MLOps
+## Architecture des dossiers
 
-## Usage
+### **app**
+Fichiers de l'API organisés de la manière suivante :
+<ul>
+    <li>api : corps de l'API</li>
+    <li>database : fichiers relatifs à la partie BDD</li>
+    <li>predict : modèle, code et fichier de référence pour les prédictions</li>
+    <li>requirements.txt : librairies du projet</li>
+</ul>
+
+### **docker_image**
+Ressources nécessaires à la création du container pour l'API.
+
+<ol>
+    <li>Lancez setup.sh (linux) ou setup.cmd (windows)</li>
+    <li></li>
+</ol>
+
+### **docs**
+### **test**
+
+
+## Usage&
 
 La fonction **get_predictions** accepte 2 paramètres :
 * **upload_file** : Chemin de l'image, HTML ou UNC
