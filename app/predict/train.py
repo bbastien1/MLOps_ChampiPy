@@ -17,8 +17,8 @@ from keras.models import Sequential
 #  MLflow
 import mlflow
 
-# experiment_id = mlflow.create_experiment('ElasticNet')
-experiment_name = "ElasticNet"
+# experiment_id = mlflow.create_experiment("VGG16+2")
+experiment_name = "VGG16+2"
 current_experiment=dict(mlflow.get_experiment_by_name(experiment_name))
 experiment_id=current_experiment['experiment_id']
 mlflow.start_run(experiment_id =experiment_id)

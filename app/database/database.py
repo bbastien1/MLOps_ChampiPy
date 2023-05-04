@@ -1,17 +1,31 @@
-from pymongo import MongoClient
+from pymongo import MongoClient, errors, timeout
 from passlib.context import CryptContext
-from pandas import DataFrame
+
 
 class Database:
     """
     """
 
+    client = None
     DATABASE = None
 
     def __init__(self):
         CONNECTION_STRING = "mongodb+srv://champipy:CCeD3AyOtqxvw2iJ@cluster0.iul9opn.mongodb.net/champipy_db"
-        client = MongoClient(CONNECTION_STRING)
-        Database.DATABASE = client.champipy_db
+        # try:
+        Database.client = MongoClient(CONNECTION_STRING)
+        Database.DATABASE = Database.client.champipy_db
+        # except errors.ServerSelectionTimeoutError:
+        #     print ("Database connection failed")
+
+
+    def check_db_connex(self):
+        try:
+            with timeout(3):
+                print ("server_info():", Database.client.server_info())
+                return True
+        except errors.ServerSelectionTimeoutError:
+            return False
+
 
     def create_users():
         pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -48,6 +62,7 @@ class Database:
             return user["username"]    
         else:
             return None
+
 
     def get_user_pwd(self, user:str):
         collection_users = Database.DATABASE["users"]
