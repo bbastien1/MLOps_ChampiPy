@@ -4,7 +4,19 @@
 
 ChampiPy est un projet de la formation Data Scientist, le but est de prédire l'espèce d'un champignon via une photo.
 
-## Overview
+Le jeu de données d'entrainement a été réduit à 10 espèces de champignons pour accélérer l'entrainement du modèle : 
+<ul>
+    <li>Aleuria aurantia</li>
+    <li>Amanita muscaria</li>
+    <li>Coprinus comatus</li>
+    <li>Lycogala epidendrum</li>
+    <li>Lycoperdon perlatum</li>
+    <li>Mycena haematopus</li>
+    <li>Pleurotus pulmonarius</li>
+    <li>Polyporus squamosus</li>
+    <li>Scleroderma citrinum</li>
+    <li>Trametes versicolor</li>
+</ul>
 
 ## Architecture des dossiers
 
@@ -26,10 +38,13 @@ Ressources nécessaires à la création du container pour l'API.
 </ol>
 
 ### **docs**
+Fichiers de documentation, dont le cahier des charges
+
 ### **test**
+Dossier contenant les scripts à utiliser avec PyTest : database_test.py et predict_test.py
 
 
-## Usage&
+## Usage
 
 La fonction **get_predictions** accepte 2 paramètres :
 * **upload_file** : Chemin de l'image, HTML ou UNC
@@ -50,5 +65,7 @@ Lancement de l'API :
 
 ## Test
 Lancement de pytest :
+
+>```python -m pytest test\database_test.py```
 
 >```python -m pytest test\predict_test.py```

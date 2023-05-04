@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/9ee8fb26e5e44bcdb788250b45a13530/artifacts
+end_time: 1683226480924
+entry_point_name: ''
+experiment_id: '622132443712942447'
+lifecycle_stage: active
+run_id: 9ee8fb26e5e44bcdb788250b45a13530
+run_name: incongruous-lynx-646
+run_uuid: 9ee8fb26e5e44bcdb788250b45a13530
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1683224654093
+status: 3
+tags: []
+user_id: bburd

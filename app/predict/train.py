@@ -5,12 +5,12 @@ import matplotlib.pyplot as plt
 
 # Import Tensorflow
 from tensorflow import keras
-from tensorflow.keras import layers
+#from tensorflow.keras import layers
 from tensorflow.keras.applications.vgg16 import VGG16
-from tensorflow.keras.preprocessing import image
+#from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.vgg16 import preprocess_input
 from tensorflow.keras.models import Model
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
+#from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from keras.models import Sequential
 
@@ -108,19 +108,19 @@ for layer in model.layers[0:-1]:
 print("Trainable variables after :", len(model.trainable_variables))
 
 
-base_learning_rate = 0.1
+base_learning_rate = 0.005
 
 # CALLBACKS
 early_stopping = EarlyStopping(monitor = 'val_loss',
                             mode = 'min',
-                            min_delta = 0.1,
+                            min_delta = 0.01,
                             patience = 15,
                             verbose = 1)
 
 
 reduce_learning_rate = ReduceLROnPlateau(monitor = 'val_loss',
                                         min_delta = 0.01,
-                                        patience = 8,
+                                        patience = 3,
                                         factor = 0.1, 
                                         cooldown = 4,
                                         verbose = 1)
@@ -132,7 +132,7 @@ model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=base_learning_rat
 
 # model.summary(show_trainable=True)
 
-initial_epochs = 100
+initial_epochs = 200
 
 history = model.fit(train_ds, 
                     epochs=initial_epochs,

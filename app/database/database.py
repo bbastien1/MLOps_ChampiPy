@@ -11,11 +11,8 @@ class Database:
 
     def __init__(self):
         CONNECTION_STRING = "mongodb+srv://champipy:CCeD3AyOtqxvw2iJ@cluster0.iul9opn.mongodb.net/champipy_db"
-        # try:
         Database.client = MongoClient(CONNECTION_STRING)
         Database.DATABASE = Database.client.champipy_db
-        # except errors.ServerSelectionTimeoutError:
-        #     print ("Database connection failed")
 
 
     def check_db_connex(self):

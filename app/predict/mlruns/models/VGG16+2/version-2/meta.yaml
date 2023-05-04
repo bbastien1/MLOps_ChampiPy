@@ -1,0 +1,13 @@
+aliases: []
+creation_timestamp: 1683223707266
+current_stage: Deleted_Internal
+description: ''
+last_updated_timestamp: 1683223732283
+name: VGG16+2
+run_id: 70a686702b61477bbe9803a357cc080b
+run_link: ''
+source: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/70a686702b61477bbe9803a357cc080b/artifacts/model
+status: READY
+status_message: null
+user_id: null
+version: 2
