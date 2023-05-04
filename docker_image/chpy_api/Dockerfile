@@ -1,13 +1,15 @@
-FROM alpine:latest
-RUN apk add --no-cache python3 py3-pip
+#FROM python:latest
+FROM ubuntu:latest
 
-RUN pip install fastapi==0.93.0
-RUN pip install uvicorn==0.20.0
-
-ADD main.py /chpy_api/main.py
+RUN apt-get update
+RUN apt-get install -y python3
+RUN apt-get install -y python3-pip
 
 WORKDIR /chpy_api/
+ADD /app/ /chpy_api/
+
+RUN pip3 install -r requirements.txt
 
 EXPOSE 8000
 
-CMD uvicorn main:api --reload
+CMD uvicorn api.main:api --host 0.0.0.0 --reload

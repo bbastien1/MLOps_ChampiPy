@@ -1,5 +1,12 @@
-docker container run -p 8000:8000 --rm --network host -it chpy_api:latest
+docker pull bbastien1/chpy_api:latest
 
+docker container run -p 8000:8000 --rm -it bbastien1/chpy_api:latest
+docker container run --security-opt seccomp=unconfined -p 8000:8000 --rm -it bbastien1/chpy_api:latest
+
+ssh -i "D:\Documents\Datascientest\MLOps\_divers\data_enginering_machine.pem" -L 8000:localhost:8000 -N ubuntu@52.17.12.137
+
+>> requirements.txt :
+pipreqs --encoding utf-8 app
 
 apk add --no-cache curl
 curl -X GET -i http://127.0.0.1:8000/
