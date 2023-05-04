@@ -1,0 +1,7 @@
+artifact_location: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447
+creation_time: 1682703279133
+experiment_id: '622132443712942447'
+last_update_time: 1683199851971
+lifecycle_stage: active
+name: VGG16+2
+tags: {}
