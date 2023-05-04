@@ -5,3 +5,5 @@ MLOps_ChampiPy.code-workspace
 open_venv.cmd
 _no_sync/
 __pycache__/
+app/api/__pycache__/main.cpython-39.pyc
+app/api/__pycache__/main.cpython-39.pyc
