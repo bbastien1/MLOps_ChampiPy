@@ -1,6 +1,10 @@
-import pytest
-import os.path
+import sys
+import os
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
+
+import pytest
 from app.predict.predict import get_predictions, get_accuracy
 
 
