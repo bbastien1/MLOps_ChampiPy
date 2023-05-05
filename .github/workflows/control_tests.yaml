@@ -22,5 +22,5 @@ jobs:
           pytest test\database_test.py
 
       - name: Run tests predict
-              run: |
-                pytest test\predict_test.py
+        run: |
+          pytest test\predict_test.py

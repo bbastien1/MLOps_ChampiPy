@@ -56,6 +56,8 @@ Retourne une prédiction contenant le nom de l'espèce ainsi que la probabilité
 
 >```python -c "from predict.predict import get_predictions;print(get_predictions('https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/2011-11-15_Aleuria_aurantia_crop.jpg/290px-2011-11-15_Aleuria_aurantia_crop.jpg',1))"```
 
+>```python -c "from predict.predict import get_accuracy;print(get_accuracy())"```
+
 Lancement de l'API :
 
 >```uvicorn api.main:api --reload```

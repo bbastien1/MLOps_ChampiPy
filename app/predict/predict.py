@@ -4,6 +4,7 @@ import numpy as np
 import pathlib
 import requests
 import os.path
+import tensorflow as tf
 
 from urllib import request
 from urllib.error import HTTPError
@@ -12,18 +13,6 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from PIL import Image
 from io import BytesIO
-
-
-def load_index_to_label(root_dir: str = ""):
-    
-    file = os.path.join(root_dir, "predict", "target_name.csv")
-    
-    if not check_file(file):
-        raise FileNotFoundError('file {} not found'.format(file))
-    
-    index_to_class_label = pd.read_csv(file, sep = ';')
-    
-    return index_to_class_label
 
 
 def load_model(root_dir: str = ""):
@@ -84,21 +73,59 @@ def get_predictions(upload_file, nb_preds: int=1):
 
     root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
 
+    # Hide TF warnings
+    tf.get_logger().setLevel('ERROR')
+
     img = image_to_array(upload_file)
     model = load_model(root_dir)
-
     preds = model.predict(img)
 
-    preds_sorted_proba = np.sort(preds)
-    preds_sorted = np.argsort(preds, axis = -1)
-
     # create a list containing the class labels
-    class_labels = load_index_to_label(root_dir)
-
+    class_labels = get_classe_names()
+    df_preds = pd.DataFrame({"name": class_labels,
+                             "proba": preds[0]*100})
+    
     # find the top X classes
-    df_preds = pd.DataFrame({"name": class_labels.iloc[preds_sorted[0,-nb_preds:],1],
-                             "proba": preds_sorted_proba[0, -nb_preds:]*100})
     df_preds = df_preds.sort_values('proba', axis=0, ascending=False)
+    df_preds = df_preds.iloc[:nb_preds]
 
-    #return df_preds.to_json(orient="records")
     return df_preds.to_dict('records')
+
+
+def get_accuracy():
+    '''Return the accuracy evaluated of the trained model'''
+
+    root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+    
+    model = load_model(root_dir)
+    eval_ds = get_eval_dataset(root_dir)
+
+    loss0, accuracy0 = model.evaluate(eval_ds)
+    
+    return accuracy0
+
+
+def get_eval_dataset(root_dir: str = ""):
+    '''Return the evaluation dataset. Splited from get_accuracy to retrieve the classe names for predictions'''
+
+    root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+    data_dir = os.path.join(root_dir, 'predict', 'images_eval')
+    
+    batch_size = 32
+    img_height = 160
+    img_width = 160
+
+    # Evaluation Dataset
+    eval_dataset = tf.keras.utils.image_dataset_from_directory(
+        data_dir,
+        seed=123,
+        image_size=(img_height, img_width),
+        batch_size=batch_size)
+    
+    return eval_dataset
+
+
+def get_classe_names(root_dir: str = ""):
+    
+    eval_ds = get_eval_dataset(root_dir)
+    return eval_ds.class_names

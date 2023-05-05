@@ -9,7 +9,7 @@ from tensorflow import keras
 from tensorflow.keras.applications.vgg16 import VGG16
 #from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.vgg16 import preprocess_input
-from tensorflow.keras.models import Model
+#from tensorflow.keras.models import Model
 #from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from keras.models import Sequential
