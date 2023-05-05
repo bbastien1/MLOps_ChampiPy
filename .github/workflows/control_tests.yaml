@@ -19,7 +19,7 @@ jobs:
 
       - name: Run API
         run: |
-          uvicorn api.main:api --reload
+          uvicorn app.main:api --reload
 
       - name: Run tests database
         run: |
