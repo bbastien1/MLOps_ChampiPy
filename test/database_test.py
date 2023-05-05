@@ -1,7 +1,7 @@
 import pytest
 import requests
 
-from app.database.database import Database
+from .app.database.database import Database
 
 
 @pytest.fixture
