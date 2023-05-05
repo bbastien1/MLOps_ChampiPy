@@ -60,7 +60,7 @@ Retourne une prédiction contenant le nom de l'espèce ainsi que la probabilité
 
 Lancement de l'API :
 
->```uvicorn api.main:api --reload```
+>```uvicorn app.api.main:api --reload```
 
 [Lien vers la documentation de l'API](http://localhost:8000/docs)
 ## Installation
