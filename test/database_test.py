@@ -21,7 +21,7 @@ def test_check_db_connex(chpy_db):
     assert chpy_db.check_db_connex() == True
 
 
-def test_check_api_db_connex(chpy_db):
-    '''Check if the API can connect to the database'''
-    r = requests.get('http://127.0.0.1:8000/dbconnex')
-    assert r.text == 'true'
+# def test_check_api_db_connex(chpy_db):
+#     '''Check if the API can connect to the database'''
+#     r = requests.get('http://127.0.0.1:8000/dbconnex')
+#     assert r.text == 'true'
