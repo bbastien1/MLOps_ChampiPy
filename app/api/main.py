@@ -1,13 +1,17 @@
+import sys
+import os
+import json
+
 from fastapi import Depends, FastAPI, HTTPException, status, Query, Response
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from passlib.context import CryptContext
-from pymongo import errors
+from urllib.parse import urlparse
 
-from predict.predict import get_predictions
-from database.database import Database
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
 
-import json
-from pandas import DataFrame
+from app.predict.predict import get_predictions
+from app.database.database import Database
 
 
 # define Python user-defined exceptions
@@ -40,10 +44,8 @@ chpy_db = Database()
 
 def get_current_user(credentials: HTTPBasicCredentials = Depends(security)):
     username = credentials.username
-    pwd_hashed = pwd_context.hash(credentials.password)
     
     if chpy_db.check_db_connex():
-        #if not(chpy_db.get_user(username)) or not(pwd_context.verify(credentials.password, chpy_db.get_user_pwd(username))):
         if not(chpy_db.get_user(username)) or not(pwd_context.verify(credentials.password, chpy_db.get_user_pwd(username))):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
@@ -53,7 +55,6 @@ def get_current_user(credentials: HTTPBasicCredentials = Depends(security)):
         return credentials.username
     else:
         raise DbConnexError("Database connection failed")
-
 
 
 @api.get('/status', tags=['home'])
@@ -78,12 +79,19 @@ async def current_user(username: str = Depends(get_current_user)):
 
 
 @api.get('/predictions/', tags=['predictions'])
-async def get_predict(file: str = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/2011-11-15_Aleuria_aurantia_crop.jpg/290px-2011-11-15_Aleuria_aurantia_crop.jpg", nb_preds: int=1, username: str = Depends(get_current_user)):
+async def get_predict(file: str = "https://images.mushroomobserver.org/320/1536252.jpg", nb_preds: int=1, username: str = Depends(get_current_user)):
     try:
-    
-        pred_result = get_predictions(file, nb_preds)
+        
+        filename = urlparse(file)
+        filename = os.path.basename(filename.path)
 
-        chpy_db.save_prediction(username, file, pred_result)
+        pred_result = Database.is_already_predicted(filename)
+
+        if pred_result == None:
+            pred_result = get_predictions(file, nb_preds)
+            chpy_db.save_prediction(username, file, pred_result)
+        else:
+            print("Prediction found")
 
         pred_json = json.dumps(pred_result)
         resp = Response(pred_json, media_type="application/json")

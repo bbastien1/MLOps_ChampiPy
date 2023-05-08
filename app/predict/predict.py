@@ -5,6 +5,9 @@ import pathlib
 import requests
 import os.path
 import tensorflow as tf
+import mlflow
+import mlflow.pyfunc
+import sys
 
 from urllib import request
 from urllib.error import HTTPError
@@ -14,11 +17,28 @@ from tensorflow.keras.preprocessing import image
 from PIL import Image
 from io import BytesIO
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
 
-def load_model(root_dir: str = ""):
-    path = os.path.join(root_dir, "predict", "model")
+from app.database.database import Database
 
-    model = keras.models.load_model(path)
+def load_model(model_name: str="VGG16", stage: str = "Production"):
+
+    # requête
+    r = requests.get(
+        url='http://localhost:5000/api/2.0/mlflow/registered-models/get-latest-versions?name={model_name}&stages={stage}'.format(model_name=model_name, stage=stage)
+    )
+    r_json = r.json()
+    model_uri = r_json['model_versions'][0]['source']
+    
+    print("Model {name} - v{version} - stage : {stage} will be used".format(name=r_json['model_versions'][0]['name'], version=r_json['model_versions'][0]['version'], stage=r_json['model_versions'][0]['current_stage']))
+
+    # path = os.path.join(root_dir, "predict", "model")
+    # model = keras.models.load_model(path)
+    
+    #model_uri="file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/60fc467393194f65879365fd55ad71df/artifacts/model"
+    model = mlflow.pyfunc.load_model(model_uri)
+
     return model
 
 
@@ -53,7 +73,7 @@ def image_to_array(upload_file):
     else :
         img = Image.open(upload_file)
     
-    img = img.resize(size = (160,160), resample = Image.NEAREST)
+    img = img.resize(size = (120,120), resample = Image.NEAREST)
     img_array = image.img_to_array(img)
     return np.expand_dims(img_array, axis = 0) 
 
@@ -77,18 +97,20 @@ def get_predictions(upload_file, nb_preds: int=1):
     tf.get_logger().setLevel('ERROR')
 
     img = image_to_array(upload_file)
-    model = load_model(root_dir)
+
+    model = load_model()
     preds = model.predict(img)
 
     # create a list containing the class labels
     class_labels = get_classe_names()
+    print("Type class_labels : ", type(class_labels))
     df_preds = pd.DataFrame({"name": class_labels,
                              "proba": preds[0]*100})
     
     # find the top X classes
     df_preds = df_preds.sort_values('proba', axis=0, ascending=False)
     df_preds = df_preds.iloc[:nb_preds]
-
+    
     return df_preds.to_dict('records')
 
 
@@ -97,7 +119,7 @@ def get_accuracy():
 
     root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
     
-    model = load_model(root_dir)
+    model = load_model()
     eval_ds = get_eval_dataset(root_dir)
 
     loss0, accuracy0 = model.evaluate(eval_ds)
@@ -112,8 +134,8 @@ def get_eval_dataset(root_dir: str = ""):
     data_dir = os.path.join(root_dir, 'predict', 'images_eval')
     
     batch_size = 32
-    img_height = 160
-    img_width = 160
+    img_height = 120
+    img_width = 120
 
     # Evaluation Dataset
     eval_dataset = tf.keras.utils.image_dataset_from_directory(
@@ -127,5 +149,5 @@ def get_eval_dataset(root_dir: str = ""):
 
 def get_classe_names(root_dir: str = ""):
     
-    eval_ds = get_eval_dataset(root_dir)
-    return eval_ds.class_names
+    chpy_db = Database()
+    return chpy_db.get_param('class_names')

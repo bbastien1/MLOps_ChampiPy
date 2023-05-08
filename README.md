@@ -58,6 +58,9 @@ Retourne une prédiction contenant le nom de l'espèce ainsi que la probabilité
 
 >```python -c "from predict.predict import get_accuracy;print(get_accuracy())"```
 
+Création des utilisateurs :
+>```python -c "from database.database import Database; db = Database(); db.create_users;"```
+
 Lancement de l'API :
 
 >```uvicorn app.api.main:api --reload```

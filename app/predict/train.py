@@ -1,44 +1,77 @@
+import sys
+import gridfs
 import os
 import pathlib
 import tensorflow as tf
 import matplotlib.pyplot as plt
+import shutil
 
-# Import Tensorflow
 from tensorflow import keras
-#from tensorflow.keras import layers
 from tensorflow.keras.applications.vgg16 import VGG16
-#from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.vgg16 import preprocess_input
-#from tensorflow.keras.models import Model
-#from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from keras.models import Sequential
+
+from pymongo import MongoClient, errors, timeout
+from bson.binary import Binary
+from io import BytesIO
+from PIL import Image
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
+
+from database.database import Database
 
 #  MLflow
 import mlflow
 
-# experiment_id = mlflow.create_experiment("VGG16+2")
-experiment_name = "VGG16+2"
+# experiment_id = mlflow.create_experiment("mlops_project")
+experiment_name = "mlops_project"
 current_experiment=dict(mlflow.get_experiment_by_name(experiment_name))
 experiment_id=current_experiment['experiment_id']
-mlflow.start_run(experiment_id =experiment_id)
+mlflow.start_run(experiment_id = experiment_id)
 
 mlflow.tensorflow.autolog()
 
 tf.get_logger().setLevel('ERROR')
 
 batch_size = 32
-img_height = 160
-img_width = 160
+img_height = 120
+img_width = 120
 IMG_SIZE = (img_width, img_height)
 
+base_learning_rate = 0.001
+initial_epochs = 10
+
+chpy_db = Database().DATABASE
+fs = gridfs.GridFS(chpy_db, 'img_store')
 
 root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
-data_dir = os.path.join(root_dir, 'predict', 'images_random')
 
+print("Dowloading images from DB...")
+
+most_recent_1000 = fs.find().sort("uploadDate", -1).limit(1000)
+images_dir = os.path.join(root_dir, 'predict', 'images_temp')
+
+# Drop all
+shutil.rmtree(images_dir)
+
+# Save DB images as physical files
+for grid_out in most_recent_1000:
+    stream = BytesIO(grid_out.read())
+    image_tmp = Image.open(stream).convert("RGB")
+    
+    image_folder = os.path.join(images_dir, grid_out.classname)
+    image_fullname = os.path.join(image_folder, grid_out.filename)
+
+    if not os.path.exists(image_folder):
+        os.makedirs(image_folder)
+    image_tmp.save(image_fullname)
+
+print("Creating the datasets...")
 # Train Dataset
 train_ds = tf.keras.utils.image_dataset_from_directory(
-    data_dir,
+    images_dir,
     validation_split=0.2,
     subset="training",
     seed=123,
@@ -47,23 +80,25 @@ train_ds = tf.keras.utils.image_dataset_from_directory(
 
 # Validation dataset
 val_ds = tf.keras.utils.image_dataset_from_directory(
-    data_dir,
+    images_dir,
     validation_split=0.2,
     subset="validation",
     seed=123,
     image_size=(img_height, img_width),
     batch_size=batch_size)
 
+mlflow.log_param("train_ds", train_ds)
+mlflow.log_param("val_ds", val_ds)
 
 class_names = train_ds.class_names
 nb_classes = len(class_names)
-print(class_names)
 
 AUTOTUNE = tf.data.AUTOTUNE
 
-train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
+train_ds = train_ds.cache().shuffle(50).prefetch(buffer_size=AUTOTUNE)
 val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 
+print("Preparing the model...")
 
 data_augmentation = tf.keras.Sequential([
     tf.keras.layers.RandomFlip("horizontal_and_vertical",
@@ -107,21 +142,18 @@ for layer in model.layers[0:-1]:
 
 print("Trainable variables after :", len(model.trainable_variables))
 
-
-base_learning_rate = 0.005
-
 # CALLBACKS
 early_stopping = EarlyStopping(monitor = 'val_loss',
                             mode = 'min',
-                            min_delta = 0.01,
+                            min_delta = 0.001,
                             patience = 15,
                             verbose = 1)
 
 
 reduce_learning_rate = ReduceLROnPlateau(monitor = 'val_loss',
-                                        min_delta = 0.01,
+                                        min_delta = 0.05,
                                         patience = 3,
-                                        factor = 0.1, 
+                                        factor = 0.5, 
                                         cooldown = 4,
                                         verbose = 1)
 
@@ -132,7 +164,6 @@ model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=base_learning_rat
 
 # model.summary(show_trainable=True)
 
-initial_epochs = 200
 
 history = model.fit(train_ds, 
                     epochs=initial_epochs,
