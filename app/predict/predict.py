@@ -10,7 +10,6 @@ import yaml
 
 from urllib import request
 from urllib.error import HTTPError
-from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from PIL import Image
 from io import BytesIO

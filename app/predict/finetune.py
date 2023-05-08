@@ -40,7 +40,11 @@ def download_images_for_dataset(path:str, nb_img:int = 1000):
         image_tmp.save(image_fullname)
 
 
-def create_datasets(path:str = "", ratio:float = 0.2, img_height:int = 120, img_width:int = 120, batch_size:int = 32):
+def create_datasets(path:str = "",
+                    ratio:float = 0.2,
+                    img_height:int = 120,
+                    img_width:int = 120,
+                    batch_size:int = 32):
     
     # Train Dataset
     train_ds = tf.keras.utils.image_dataset_from_directory(
@@ -73,7 +77,10 @@ def create_datasets(path:str = "", ratio:float = 0.2, img_height:int = 120, img_
 
 def load_model(model_name: str="VGG16", stage: str = "Production"):
 
-    mlruns_fld = os.path.realpath(os.path.join(SCRIPT_DIR, 'mlruns', 'models', model_name))
+    mlruns_fld = os.path.realpath(os.path.join(SCRIPT_DIR,
+                                               'mlruns',
+                                               'models',
+                                               model_name))
 
     for path, subdirs, files in os.walk(mlruns_fld):
         for name in files:    
@@ -95,7 +102,9 @@ def load_model(model_name: str="VGG16", stage: str = "Production"):
     
     model_fld_final = model_fld_deb + model_fld_fin
     model_fld_final = os.path.realpath(model_fld_final)
-    model_fld_final_tf = os.path.realpath(os.path.join(model_fld_final, "data", "model"))
+    model_fld_final_tf = os.path.realpath(os.path.join(model_fld_final,
+                                                       "data",
+                                                       "model"))
     print("Model folder:", model_fld_final_tf)
     #model = mlflow.pyfunc.load_model(model_fld_final)
 
