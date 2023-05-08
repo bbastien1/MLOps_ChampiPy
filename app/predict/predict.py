@@ -40,8 +40,15 @@ def load_model(model_name: str="VGG16", stage: str = "Production"):
                 except KeyError:
                     # YAML dans model ne contient pas 'current_stage'
                     pass
+
+    model_fld_split = model_fld.rsplit('mlruns')
+    model_fld_fin = model_fld_split[1]
+    model_fld_deb = os.path.realpath(os.path.join(SCRIPT_DIR, 'mlruns'))
     
-    model = mlflow.pyfunc.load_model(model_fld)
+    model_fld_final = model_fld_deb + model_fld_fin
+    model_fld_final = os.path.realpath(model_fld_final)
+    print("Model folder:", model_fld_final)
+    model = mlflow.pyfunc.load_model(model_fld_final)
 
     return model
 
