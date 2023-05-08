@@ -1,6 +1,18 @@
-
 .venv/
 MLOps_ChampiPy.code-workspace
 _no_sync/
+
+### Python ###
+# Byte-compiled / optimized / DLL files
 __pycache__/
-app/api/__pycache__/main.cpython-39.pyc
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
