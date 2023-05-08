@@ -2,7 +2,7 @@ import sys
 import os
 import json
 
-from fastapi import Depends, FastAPI, HTTPException, status, Query, Response
+from fastapi import Depends, FastAPI, HTTPException, status, Response
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from passlib.context import CryptContext
 from urllib.parse import urlparse
@@ -51,13 +51,15 @@ def get_current_user(credentials: HTTPBasicCredentials = Depends(security)):
     username = credentials.username
     
     if chpy_db.check_db_connex():
-        if not(chpy_db.get_user(username)) or not(pwd_context.verify(credentials.password, chpy_db.get_user_pwd(username))):
+        if not(chpy_db.get_user(username)) or \
+                not(pwd_context.verify(credentials.password, chpy_db.get_user_pwd(username))):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Incorrect email or password",
                 headers={"WWW-Authenticate": "Basic"},
             )
-        ret={'username': credentials.username, 'is_admin': chpy_db.is_user_role(username, 'admin')}
+        ret={'username': credentials.username, 
+             'is_admin': chpy_db.is_user_role(username, 'admin')}
         return ret
     else:
         raise DbConnexError("Database connection failed")
@@ -95,7 +97,7 @@ async def get_predict(file: str = "https://images.mushroomobserver.org/320/15362
 
         pred_result = Database.is_already_predicted(filename)
 
-        if pred_result == None:
+        if pred_result is None:
             pred_result = get_predictions(file, nb_preds)
             chpy_db.save_prediction(user['username'], file, pred_result)
         else:

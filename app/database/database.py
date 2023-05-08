@@ -1,15 +1,9 @@
-import numpy as np
 import requests
 import datetime
-import pickle
 import os
 import gridfs
 
-from PIL import Image
-from io import BytesIO
-from tensorflow.keras.preprocessing import image
 from pymongo import MongoClient, errors, timeout
-from bson.binary import Binary
 from urllib.parse import urlparse
 
 class Database:
