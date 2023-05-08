@@ -117,6 +117,8 @@ def get_predictions(upload_file, nb_preds: int=1):
     df_preds = pd.DataFrame({"name": class_labels,
                              "proba": preds[0]*100})
     
+    df_preds['proba'] = df_preds['proba'].apply(lambda x: round(x, 2))
+
     # find the top X classes
     df_preds = df_preds.sort_values('proba', axis=0, ascending=False)
     df_preds = df_preds.iloc[:nb_preds]
@@ -137,7 +139,7 @@ def get_accuracy():
 
     loss0, accuracy0 = model.evaluate(eval_ds)
     
-    return accuracy0
+    return round(accuracy0*100, 2)
 
 
 def get_eval_dataset(root_dir: str = ""):

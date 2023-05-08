@@ -1,8 +1,8 @@
 aliases: []
 creation_timestamp: 1683467308254
-current_stage: None
+current_stage: Production
 description: ''
-last_updated_timestamp: 1683467308254
+last_updated_timestamp: 1683554750208
 name: VGG16
 run_id: e75b3c4ac82e4ddf95d0c49914b6bd56
 run_link: ''

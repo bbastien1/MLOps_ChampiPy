@@ -1,8 +1,9 @@
 artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/4b4c112234214777913cb6a125b96375/artifacts
+deleted_time: 1683553729455
 end_time: 1683509003169
 entry_point_name: ''
 experiment_id: '622132443712942447'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: 4b4c112234214777913cb6a125b96375
 run_name: caring-sheep-491
 run_uuid: 4b4c112234214777913cb6a125b96375

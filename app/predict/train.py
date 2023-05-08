@@ -35,7 +35,7 @@ img_width = 120
 IMG_SIZE = (img_width, img_height)
 
 base_learning_rate = 0.001
-initial_epochs = 10
+initial_epochs = 200
 
 chpy_db = Database().DATABASE
 fs = gridfs.GridFS(chpy_db, 'img_store')
