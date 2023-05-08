@@ -5,10 +5,10 @@ import pathlib
 import requests
 import os.path
 import tensorflow as tf
-import mlflow
-import mlflow.pyfunc
 import sys
+import yaml
 
+import mlflow.pyfunc
 from urllib import request
 from urllib.error import HTTPError
 from tensorflow import keras
@@ -23,11 +23,25 @@ sys.path.append(os.path.dirname(SCRIPT_DIR))
 from app.database.database import Database
 
 def load_model(model_name: str="VGG16", stage: str = "Production"):
-    # Change working directory
-    os.chdir(SCRIPT_DIR)
 
-    model_uri=f"models:/{model_name}/{stage}"
-    model = mlflow.pyfunc.load_model(model_uri)
+    mlruns_fld = os.path.realpath(os.path.join(SCRIPT_DIR, 'mlruns', 'models', model_name))
+
+    for path, subdirs, files in os.walk(mlruns_fld):
+        for name in files:    
+            fullname = os.path.join(path, name)
+            
+            with open(fullname, 'r') as file:
+                infos = yaml.safe_load(file)
+                try:
+                    if infos['current_stage'] == stage:
+                        model_fld = infos['source']
+                        print(model_fld)
+
+                except KeyError:
+                    # YAML dans model ne contient pas 'current_stage'
+                    pass
+    
+    model = mlflow.pyfunc.load_model(model_fld)
 
     return model
 
@@ -81,8 +95,6 @@ def get_predictions(upload_file, nb_preds: int=1):
     if not type(nb_preds) == int:
         raise TypeError('nb_preds must be an integer')
 
-    root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
-
     # Hide TF warnings
     tf.get_logger().setLevel('ERROR')
 
@@ -93,7 +105,7 @@ def get_predictions(upload_file, nb_preds: int=1):
 
     # create a list containing the class labels
     class_labels = get_classe_names()
-    print("Type class_labels : ", type(class_labels))
+
     df_preds = pd.DataFrame({"name": class_labels,
                              "proba": preds[0]*100})
     
