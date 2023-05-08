@@ -8,14 +8,13 @@ import tensorflow as tf
 import sys
 import yaml
 
-import mlflow.pyfunc
 from urllib import request
 from urllib.error import HTTPError
-from tensorflow import keras
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from PIL import Image
 from io import BytesIO
+from datetime import datetime
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
@@ -162,7 +161,29 @@ def get_eval_dataset(root_dir: str = ""):
     return eval_dataset
 
 
-def get_classe_names(root_dir: str = ""):
+def get_classe_names():
     
     chpy_db = Database()
     return chpy_db.get_param('class_names')
+
+def get_model_date(model_name: str="VGG16", stage: str = "Production"):
+
+    ret = None
+    mlruns_fld = os.path.realpath(os.path.join(SCRIPT_DIR, 'mlruns', 'models', model_name))
+
+    for path, subdirs, files in os.walk(mlruns_fld):
+        for name in files:    
+            fullname = os.path.join(path, name)
+            
+            with open(fullname, 'r') as file:
+                infos = yaml.safe_load(file)
+                try:
+                    if infos['current_stage'] == stage:
+                        model_date = infos['creation_timestamp']
+                        model_date = model_date / 1000
+                        ret = datetime.fromtimestamp(model_date)
+                except KeyError:
+                    # YAML dans model ne contient pas 'current_stage'
+                    pass
+
+    return ret                    

@@ -19,7 +19,6 @@ sys.path.append(os.path.dirname(SCRIPT_DIR))
 from database.database import Database
 
 
-# experiment_id = mlflow.create_experiment("mlops_project")
 experiment_name = "mlops_project"
 current_experiment=dict(mlflow.get_experiment_by_name(experiment_name))
 experiment_id=current_experiment['experiment_id']

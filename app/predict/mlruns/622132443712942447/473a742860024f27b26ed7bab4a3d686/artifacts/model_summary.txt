@@ -1,0 +1,61 @@
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_2 (InputLayer)        [(None, 120, 120, 3)]     0         
+                                                                 
+ sequential (Sequential)     (None, 120, 120, 3)       0         
+                                                                 
+ tf.__operators__.getitem (S  (None, 120, 120, 3)      0         
+ licingOpLambda)                                                 
+                                                                 
+ tf.nn.bias_add (TFOpLambda)  (None, 120, 120, 3)      0         
+                                                                 
+ block1_conv1 (Conv2D)       (None, 120, 120, 64)      1792      
+                                                                 
+ block1_conv2 (Conv2D)       (None, 120, 120, 64)      36928     
+                                                                 
+ block1_pool (MaxPooling2D)  (None, 60, 60, 64)        0         
+                                                                 
+ block2_conv1 (Conv2D)       (None, 60, 60, 128)       73856     
+                                                                 
+ block2_conv2 (Conv2D)       (None, 60, 60, 128)       147584    
+                                                                 
+ block2_pool (MaxPooling2D)  (None, 30, 30, 128)       0         
+                                                                 
+ block3_conv1 (Conv2D)       (None, 30, 30, 256)       295168    
+                                                                 
+ block3_conv2 (Conv2D)       (None, 30, 30, 256)       590080    
+                                                                 
+ block3_conv3 (Conv2D)       (None, 30, 30, 256)       590080    
+                                                                 
+ block3_pool (MaxPooling2D)  (None, 15, 15, 256)       0         
+                                                                 
+ block4_conv1 (Conv2D)       (None, 15, 15, 512)       1180160   
+                                                                 
+ block4_conv2 (Conv2D)       (None, 15, 15, 512)       2359808   
+                                                                 
+ block4_conv3 (Conv2D)       (None, 15, 15, 512)       2359808   
+                                                                 
+ block4_pool (MaxPooling2D)  (None, 7, 7, 512)         0         
+                                                                 
+ block5_conv1 (Conv2D)       (None, 7, 7, 512)         2359808   
+                                                                 
+ block5_conv2 (Conv2D)       (None, 7, 7, 512)         2359808   
+                                                                 
+ block5_conv3 (Conv2D)       (None, 7, 7, 512)         2359808   
+                                                                 
+ block5_pool (MaxPooling2D)  (None, 3, 3, 512)         0         
+                                                                 
+ global_average_pooling2d (G  (None, 512)              0         
+ lobalAveragePooling2D)                                          
+                                                                 
+ dropout (Dropout)           (None, 512)               0         
+                                                                 
+ dense (Dense)               (None, 10)                5130      
+                                                                 
+=================================================================
+Total params: 14,719,818
+Trainable params: 2,364,938
+Non-trainable params: 12,354,880
+_________________________________________________________________

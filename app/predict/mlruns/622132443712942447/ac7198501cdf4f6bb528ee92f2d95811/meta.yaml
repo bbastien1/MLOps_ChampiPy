@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/ac7198501cdf4f6bb528ee92f2d95811/artifacts
+end_time: 1683573258886
+entry_point_name: ''
+experiment_id: '622132443712942447'
+lifecycle_stage: active
+run_id: ac7198501cdf4f6bb528ee92f2d95811
+run_name: lyrical-finch-529
+run_uuid: ac7198501cdf4f6bb528ee92f2d95811
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1683568674692
+status: 3
+tags: []
+user_id: bburd

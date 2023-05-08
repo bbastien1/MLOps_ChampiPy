@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/d4ec0b77f7cd4205b1c0e075bc2ef428/artifacts
+deleted_time: 1683577485906
+end_time: 1683565549646
+entry_point_name: ''
+experiment_id: '622132443712942447'
+lifecycle_stage: deleted
+run_id: d4ec0b77f7cd4205b1c0e075bc2ef428
+run_name: wistful-lark-208
+run_uuid: d4ec0b77f7cd4205b1c0e075bc2ef428
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1683565449506
+status: 3
+tags: []
+user_id: bburd

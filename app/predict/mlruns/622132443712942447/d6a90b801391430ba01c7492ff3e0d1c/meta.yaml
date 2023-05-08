@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/d6a90b801391430ba01c7492ff3e0d1c/artifacts
+deleted_time: 1683564887246
+end_time: 1683564747365
+entry_point_name: ''
+experiment_id: '622132443712942447'
+lifecycle_stage: deleted
+run_id: d6a90b801391430ba01c7492ff3e0d1c
+run_name: shivering-shark-768
+run_uuid: d6a90b801391430ba01c7492ff3e0d1c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1683564666935
+status: 3
+tags: []
+user_id: bburd
