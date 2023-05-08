@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/21198c88c6ec48358f87f8f577d84d18/artifacts
+deleted_time: 1683465468708
+end_time: 1683465419825
+entry_point_name: ''
+experiment_id: '622132443712942447'
+lifecycle_stage: deleted
+run_id: 21198c88c6ec48358f87f8f577d84d18
+run_name: inquisitive-bass-70
+run_uuid: 21198c88c6ec48358f87f8f577d84d18
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1683465419721
+status: 3
+tags: []
+user_id: bburd

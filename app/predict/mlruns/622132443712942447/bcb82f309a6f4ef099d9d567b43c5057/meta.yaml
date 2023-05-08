@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/bcb82f309a6f4ef099d9d567b43c5057/artifacts
+deleted_time: 1683413736420
+end_time: 1683410376199
+entry_point_name: ''
+experiment_id: '622132443712942447'
+lifecycle_stage: deleted
+run_id: bcb82f309a6f4ef099d9d567b43c5057
+run_name: stylish-skink-816
+run_uuid: bcb82f309a6f4ef099d9d567b43c5057
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1683410348297
+status: 3
+tags: []
+user_id: bburd

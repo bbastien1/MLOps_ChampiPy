@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/d2099f1304e04426a3d8d9123772b91c/artifacts
+deleted_time: 1683506581000
+end_time: 1683501821236
+entry_point_name: ''
+experiment_id: '622132443712942447'
+lifecycle_stage: deleted
+run_id: d2099f1304e04426a3d8d9123772b91c
+run_name: resilient-bug-601
+run_uuid: d2099f1304e04426a3d8d9123772b91c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1683473838325
+status: 3
+tags: []
+user_id: bburd

@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/9fce4b68f56c4578ae4c9768cfec76b9/artifacts
+deleted_time: 1683506581004
+end_time: 1683506431608
+entry_point_name: ''
+experiment_id: '622132443712942447'
+lifecycle_stage: deleted
+run_id: 9fce4b68f56c4578ae4c9768cfec76b9
+run_name: mercurial-bat-488
+run_uuid: 9fce4b68f56c4578ae4c9768cfec76b9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1683506385615
+status: 3
+tags: []
+user_id: bburd

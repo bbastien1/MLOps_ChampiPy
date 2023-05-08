@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/b1624d229de24dbba0aac65e0e87f32a/artifacts
+deleted_time: 1683413736418
+end_time: 1683410822594
+entry_point_name: ''
+experiment_id: '622132443712942447'
+lifecycle_stage: deleted
+run_id: b1624d229de24dbba0aac65e0e87f32a
+run_name: melodic-quail-1
+run_uuid: b1624d229de24dbba0aac65e0e87f32a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1683410788574
+status: 3
+tags: []
+user_id: bburd

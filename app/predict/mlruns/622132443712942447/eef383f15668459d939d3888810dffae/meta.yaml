@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/eef383f15668459d939d3888810dffae/artifacts
+deleted_time: 1683506580993
+end_time: 1683506334900
+entry_point_name: ''
+experiment_id: '622132443712942447'
+lifecycle_stage: deleted
+run_id: eef383f15668459d939d3888810dffae
+run_name: vaunted-tern-975
+run_uuid: eef383f15668459d939d3888810dffae
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1683506334768
+status: 3
+tags: []
+user_id: bburd

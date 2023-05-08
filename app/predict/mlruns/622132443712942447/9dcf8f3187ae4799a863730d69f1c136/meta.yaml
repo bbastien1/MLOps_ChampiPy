@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/9dcf8f3187ae4799a863730d69f1c136/artifacts
+deleted_time: 1683506581011
+end_time: 1683473802428
+entry_point_name: ''
+experiment_id: '622132443712942447'
+lifecycle_stage: deleted
+run_id: 9dcf8f3187ae4799a863730d69f1c136
+run_name: likeable-wolf-834
+run_uuid: 9dcf8f3187ae4799a863730d69f1c136
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1683473455589
+status: 3
+tags: []
+user_id: bburd
