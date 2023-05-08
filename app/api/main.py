@@ -52,7 +52,8 @@ def get_current_user(credentials: HTTPBasicCredentials = Depends(security)):
     
     if chpy_db.check_db_connex():
         if not(chpy_db.get_user(username)) or \
-                not(pwd_context.verify(credentials.password, chpy_db.get_user_pwd(username))):
+                not(pwd_context.verify(credentials.password,
+                                       chpy_db.get_user_pwd(username))):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Incorrect email or password",

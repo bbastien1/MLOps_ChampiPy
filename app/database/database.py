@@ -23,7 +23,7 @@ class Database:
     def check_db_connex(self):
         try:
             with timeout(3):
-                not_used = Database.client.server_info()
+                Database.client.server_info()
                 return True
         except errors.ServerSelectionTimeoutError:
             return False
@@ -35,7 +35,7 @@ class Database:
             collection_users = Database.DATABASE["users"]
             user_query = { "username": user }
             user = collection_users.find_one(user_query)
-            if user != None :
+            if user is not None :
                 ret = user["username"]    
         return ret
 
@@ -69,7 +69,7 @@ class Database:
                 with open(file, 'rb') as f:
                     contents = f.read()
 
-            a = Database.fs.put(contents, filename=name, classname=classname, user=user)
+            Database.fs.put(contents, filename=name, classname=classname, user=user)
         else:
             print("Image already saved")
 
@@ -91,7 +91,10 @@ class Database:
 
         # Store image on DB if proba >= 70 %
         if results[0]['proba'] >= 70:
-            Database.add_image_to_db(user=user, file=file, classname=results[0]['name'], name=filename)
+            Database.add_image_to_db(user=user,
+                                     file=file,
+                                     classname=results[0]['name'],
+                                     name=filename)
 
 
 
@@ -108,7 +111,7 @@ class Database:
             collection_preds = Database.DATABASE["predictions"]
             query = { "filename": file }
             prediction = collection_preds.find_one(query)
-            if prediction != None:
+            if prediction is not None:
                 ret = prediction['results']
 
         return ret
