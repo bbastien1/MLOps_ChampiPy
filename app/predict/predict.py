@@ -23,20 +23,10 @@ sys.path.append(os.path.dirname(SCRIPT_DIR))
 from app.database.database import Database
 
 def load_model(model_name: str="VGG16", stage: str = "Production"):
+    # Change working directory
+    os.chdir(SCRIPT_DIR)
 
-    # requête
-    r = requests.get(
-        url='http://localhost:5000/api/2.0/mlflow/registered-models/get-latest-versions?name={model_name}&stages={stage}'.format(model_name=model_name, stage=stage)
-    )
-    r_json = r.json()
-    model_uri = r_json['model_versions'][0]['source']
-    
-    print("Model {name} - v{version} - stage : {stage} will be used".format(name=r_json['model_versions'][0]['name'], version=r_json['model_versions'][0]['version'], stage=r_json['model_versions'][0]['current_stage']))
-
-    # path = os.path.join(root_dir, "predict", "model")
-    # model = keras.models.load_model(path)
-    
-    #model_uri="file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/60fc467393194f65879365fd55ad71df/artifacts/model"
+    model_uri=f"models:/{model_name}/{stage}"
     model = mlflow.pyfunc.load_model(model_uri)
 
     return model

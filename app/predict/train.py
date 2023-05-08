@@ -1,19 +1,15 @@
 import sys
 import gridfs
 import os
-import pathlib
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import shutil
+import mlflow
 
-from tensorflow import keras
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.applications.vgg16 import preprocess_input
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
-from keras.models import Sequential
 
-from pymongo import MongoClient, errors, timeout
-from bson.binary import Binary
 from io import BytesIO
 from PIL import Image
 
@@ -22,8 +18,6 @@ sys.path.append(os.path.dirname(SCRIPT_DIR))
 
 from database.database import Database
 
-#  MLflow
-import mlflow
 
 # experiment_id = mlflow.create_experiment("mlops_project")
 experiment_name = "mlops_project"
@@ -195,7 +189,7 @@ plt.legend(loc='upper right')
 plt.ylabel('Cross Entropy')
 plt.title('Training and Validation Loss')
 plt.xlabel('epoch')
-plt.show()
+#plt.show()
 
 fig.savefig("train_VGG16plus2.png")
 plt.close(fig)
