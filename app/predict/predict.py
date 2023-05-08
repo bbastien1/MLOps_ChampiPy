@@ -46,8 +46,8 @@ def load_model(model_name: str="VGG16", stage: str = "Production"):
     
     model_fld_final = model_fld_deb + model_fld_fin
     model_fld_final = os.path.realpath(model_fld_final)
-    model_fld_final_tf = os.path.realpath(model_fld_final + "\data\model")
-    print("Model folder:", model_fld_final)
+    model_fld_final_tf = os.path.realpath(os.path.join(model_fld_final, "data", "model"))
+    print("Model folder:", model_fld_final_tf)
     #model = mlflow.pyfunc.load_model(model_fld_final)
 
     model = tf.keras.models.load_model(model_fld_final_tf)
