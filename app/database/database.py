@@ -119,3 +119,29 @@ class Database:
 
         return ret
     
+
+    def get_last_images(self, nb_images:int):
+        images = Database.fs.find().sort("uploadDate", -1).limit(nb_images)
+        return images
+    
+
+    def get_nb_images_since(self, date):
+        query = { "uploadDate": {"$gt": date} }
+        print(query)
+        images = Database.fs.find(query)
+        nb_img = 0
+        for grid_out in images:
+            nb_img += 1
+        return nb_img
+
+
+    def get_last_predictions_accuracy(self, nb_preds:int = 10):
+        total = 0
+        collection_preds = Database.DATABASE["predictions"]
+        predictions = collection_preds.find().sort("datetime", -1).limit(nb_preds)
+
+        for grid_out in predictions:
+            total += grid_out['results'][0]['proba']
+
+        return round(total / nb_preds, 2)
+

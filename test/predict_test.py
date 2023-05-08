@@ -34,4 +34,4 @@ def test_get_predictions_raises_exception_on_non_int_argument():
 
 def test_get_accuracy():
     response = get_accuracy()
-    assert response >= 0.7
+    assert response >= 70

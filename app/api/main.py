@@ -10,7 +10,8 @@ from urllib.parse import urlparse
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
 
-from app.predict.predict import get_predictions, get_accuracy
+import app.predict.finetune as ft
+from app.predict.predict import get_predictions, get_accuracy, get_model_date
 from app.database.database import Database
 
 
@@ -33,6 +34,10 @@ api = FastAPI(
     {
         'name': 'predictions',
         'description': 'Fonctions utilisées pour obtenir des prédictions'
+    },
+    {
+        'name': 'supervise',
+        'description': 'Fonctions utilisées pour superviser le modèle'
     }
 ]
 )
@@ -80,7 +85,9 @@ async def current_user(user: str = Depends(get_current_user)):
 
 
 @api.get('/predictions/', tags=['predictions'])
-async def get_predict(file: str = "https://images.mushroomobserver.org/320/1536252.jpg", nb_preds: int=1, user: str = Depends(get_current_user)):
+async def get_predict(file: str = "https://images.mushroomobserver.org/320/1536252.jpg", 
+                      nb_preds: int=1, 
+                      user: str = Depends(get_current_user)):
     try:
         
         filename = urlparse(file)
@@ -117,7 +124,7 @@ async def get_predict(file: str = "https://images.mushroomobserver.org/320/15362
             detail='Database connection failed')
     
 
-@api.get('/accuracy/', tags=['predictions'])
+@api.get('/accuracy/', tags=['supervise'])
 async def get_model_accuracy(user: str = Depends(get_current_user)):
     
     if not user['is_admin']:
@@ -134,5 +141,70 @@ async def get_model_accuracy(user: str = Depends(get_current_user)):
     
     return resp
 
+@api.get('/past_pred_acc/', tags=['supervise'])
+async def get_last_predictions_accuracy(nb_last_preds:int = 10, 
+                                        user: str = Depends(get_current_user)):
+    
+    if not user['is_admin']:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="admin access required",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    
+    acc_result = chpy_db.get_last_predictions_accuracy(nb_last_preds)
 
+    acc_json = json.dumps(acc_result)
+    resp = Response(acc_json, media_type="application/json")
+    
+    return resp
+
+@api.get('/nb_new_img/', tags=['supervise'])
+async def get_nb_new_images(model_name: str="VGG16", 
+                            stage: str = "Production",
+                            user: str = Depends(get_current_user)):
+    
+    if not user['is_admin']:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="admin access required",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    
+    model_date = get_model_date(model_name, stage)
+    nb_images = chpy_db.get_nb_images_since(model_date)
+    
+    return nb_images
+
+@api.get('/finetune/', tags=['supervise'])
+async def fine_tune_model(model_name: str="VGG16", 
+                          stage: str = "Production", 
+                          variables:int = 2, 
+                          epochs:int = 10, 
+                          user: str = Depends(get_current_user)):
+    
+    if not user['is_admin']:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="admin access required",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    
+    root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+    images_dir = os.path.join(root_dir, 'predict', 'images_temp')
+
+    ft.download_images_for_dataset(images_dir)
+    train_ds, val_ds, nb_classes = ft.create_datasets(images_dir) 
+    model = ft.load_model(model_name, stage)
+
+    model = ft.fine_tune_model(model, variables)
+    model = ft.compile_model(model)
+    history = ft.train_model(model, epochs, train_ds, val_ds)
+
+    result = ft.get_history_last_values(history)
+
+    res_json = json.dumps(result)
+    resp = Response(res_json, media_type="application/json")
+    
+    return resp
 
