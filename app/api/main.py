@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
 
-from app.predict.predict import get_predictions
+from app.predict.predict import get_predictions, get_accuracy
 from app.database.database import Database
 
 
@@ -52,7 +52,8 @@ def get_current_user(credentials: HTTPBasicCredentials = Depends(security)):
                 detail="Incorrect email or password",
                 headers={"WWW-Authenticate": "Basic"},
             )
-        return credentials.username
+        ret={'username': credentials.username, 'is_admin': chpy_db.is_user_role(username, 'admin')}
+        return ret
     else:
         raise DbConnexError("Database connection failed")
 
@@ -74,12 +75,12 @@ async def get_db_connex_status():
 
 
 @api.get('/user', tags=['home'])
-async def current_user(username: str = Depends(get_current_user)):
-    return "Hello {}".format(username)
+async def current_user(user: str = Depends(get_current_user)):
+    return "Hello {}, are you admin ? {}".format(user['username'], user['is_admin'])
 
 
 @api.get('/predictions/', tags=['predictions'])
-async def get_predict(file: str = "https://images.mushroomobserver.org/320/1536252.jpg", nb_preds: int=1, username: str = Depends(get_current_user)):
+async def get_predict(file: str = "https://images.mushroomobserver.org/320/1536252.jpg", nb_preds: int=1, user: str = Depends(get_current_user)):
     try:
         
         filename = urlparse(file)
@@ -89,7 +90,7 @@ async def get_predict(file: str = "https://images.mushroomobserver.org/320/15362
 
         if pred_result == None:
             pred_result = get_predictions(file, nb_preds)
-            chpy_db.save_prediction(username, file, pred_result)
+            chpy_db.save_prediction(user['username'], file, pred_result)
         else:
             print("Prediction found")
 
@@ -114,3 +115,26 @@ async def get_predict(file: str = "https://images.mushroomobserver.org/320/15362
         raise HTTPException(
             status_code=512,
             detail='Database connection failed')
+    
+
+@api.get('/accuracy/', tags=['predictions'])
+async def get_model_accuracy(user: str = Depends(get_current_user)):
+    
+
+    print(user['username'], user['is_admin'])
+    if not user['is_admin']:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="admin access required",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    
+    acc_result = get_accuracy()
+
+    acc_json = json.dumps(acc_result)
+    resp = Response(acc_json, media_type="application/json")
+    
+    return resp
+
+
+

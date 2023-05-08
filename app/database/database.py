@@ -51,7 +51,18 @@ class Database:
         user_query = { "username": user }
         user = collection_users.find_one(user_query)
         return user["hashed_password"]
-    
+
+
+    def is_user_role(self, user:str, role:str):
+        collection_users = Database.DATABASE["users"]
+        user_query = { "username": user }
+        user = collection_users.find_one(user_query)
+
+        if role in user['access']:
+            return True
+        else:
+            return False
+
 
     def add_image_to_db(user:str, file:str, classname:str, name:str):
         

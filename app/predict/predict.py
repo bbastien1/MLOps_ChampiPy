@@ -35,7 +35,6 @@ def load_model(model_name: str="VGG16", stage: str = "Production"):
                 try:
                     if infos['current_stage'] == stage:
                         model_fld = infos['source']
-                        print(model_fld)
 
                 except KeyError:
                     # YAML dans model ne contient pas 'current_stage'
@@ -47,9 +46,11 @@ def load_model(model_name: str="VGG16", stage: str = "Production"):
     
     model_fld_final = model_fld_deb + model_fld_fin
     model_fld_final = os.path.realpath(model_fld_final)
+    model_fld_final_tf = os.path.realpath(model_fld_final + "\data\model")
     print("Model folder:", model_fld_final)
-    model = mlflow.pyfunc.load_model(model_fld_final)
+    #model = mlflow.pyfunc.load_model(model_fld_final)
 
+    model = tf.keras.models.load_model(model_fld_final_tf)
     return model
 
 
@@ -128,6 +129,9 @@ def get_accuracy():
 
     root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
     
+    # Hide TF warnings
+    tf.get_logger().setLevel('ERROR')
+
     model = load_model()
     eval_ds = get_eval_dataset(root_dir)
 
