@@ -10,7 +10,7 @@ from app.predict.predict import get_predictions, get_accuracy
 
 def test_get_predictions():
     """Prédiction à partir d'un fichier physique"""
-    response = get_predictions(os.path.join("test", "1494823.jpg"), 1)
+    response = get_predictions(os.path.join("test", "469817.jpg"), 1)
     assert response[0]['name'] == 'Pleurotus pulmonarius'
 
     """Prédiction à partir d'une URL"""

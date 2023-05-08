@@ -120,8 +120,6 @@ async def get_predict(file: str = "https://images.mushroomobserver.org/320/15362
 @api.get('/accuracy/', tags=['predictions'])
 async def get_model_accuracy(user: str = Depends(get_current_user)):
     
-
-    print(user['username'], user['is_admin'])
     if not user['is_admin']:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
