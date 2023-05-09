@@ -45,7 +45,7 @@ async def test_accuracy():
 
 
 @pytest.mark.anyio
-async def test_accuracy():
+async def test_nb_new_img():
     async with AsyncClient(app=api, base_url="http://test") as ac:
         auth = BasicAuth("admin", "admin")
         response = await ac.get("/nb_new_img", auth=auth)
