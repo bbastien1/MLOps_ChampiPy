@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/b1c5652e39c649319f010208d6f14d10/artifacts
+deleted_time: 1683638574683
+end_time: null
+entry_point_name: ''
+experiment_id: '622132443712942447'
+lifecycle_stage: deleted
+run_id: b1c5652e39c649319f010208d6f14d10
+run_name: abrasive-newt-712
+run_uuid: b1c5652e39c649319f010208d6f14d10
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1683638528566
+status: 1
+tags: []
+user_id: bburd

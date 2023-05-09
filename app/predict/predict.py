@@ -18,7 +18,7 @@ from datetime import datetime
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
 
-from app.database.database import Database
+from database.database import Database
 
 def load_model(model_name: str="VGG16", stage: str = "Production"):
 

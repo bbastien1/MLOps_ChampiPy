@@ -1,8 +1,9 @@
 artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/eed92af2b50d471ab16accbea4b58e3e/artifacts
+deleted_time: 1683638628303
 end_time: 1683507594681
 entry_point_name: ''
 experiment_id: '622132443712942447'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: eed92af2b50d471ab16accbea4b58e3e
 run_name: skillful-snipe-214
 run_uuid: eed92af2b50d471ab16accbea4b58e3e

@@ -1,8 +1,9 @@
 artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/99a4f241f1cc44ecb5fa72a884b73dd3/artifacts
+deleted_time: 1683638628312
 end_time: 1683224456619
 entry_point_name: ''
 experiment_id: '622132443712942447'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: 99a4f241f1cc44ecb5fa72a884b73dd3
 run_name: caring-pug-98
 run_uuid: 99a4f241f1cc44ecb5fa72a884b73dd3

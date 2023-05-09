@@ -1,8 +1,9 @@
 artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/9ee8fb26e5e44bcdb788250b45a13530/artifacts
+deleted_time: 1683638628318
 end_time: 1683226480924
 entry_point_name: ''
 experiment_id: '622132443712942447'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: 9ee8fb26e5e44bcdb788250b45a13530
 run_name: incongruous-lynx-646
 run_uuid: 9ee8fb26e5e44bcdb788250b45a13530

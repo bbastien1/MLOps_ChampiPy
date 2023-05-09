@@ -1,8 +1,9 @@
 artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/0ac7ae2ea211425ca7b979cc00ec46a6/artifacts
+deleted_time: 1683638628302
 end_time: 1683506759923
 entry_point_name: ''
 experiment_id: '622132443712942447'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: 0ac7ae2ea211425ca7b979cc00ec46a6
 run_name: awesome-midge-295
 run_uuid: 0ac7ae2ea211425ca7b979cc00ec46a6

@@ -1,8 +1,9 @@
 artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/6e5c119f6e1e4bc4a15d45e636eed98b/artifacts
+deleted_time: 1683638574682
 end_time: null
 entry_point_name: ''
 experiment_id: '622132443712942447'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: 6e5c119f6e1e4bc4a15d45e636eed98b
 run_name: secretive-auk-685
 run_uuid: 6e5c119f6e1e4bc4a15d45e636eed98b
