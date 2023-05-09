@@ -32,6 +32,8 @@ jobs:
         run: |
           pytest test/api_test_perf.py
 
+      - name: Archive model_perf_tracker log
+        uses: actions/upload-artifact@v3
         with:
           name: model_perf_tracker_log
           path: model_perf_tracker.log
