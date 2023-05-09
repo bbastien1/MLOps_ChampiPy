@@ -1,9 +1,12 @@
 name: Pytest control Predict, Database and API
 on: push
 jobs:
-  qa:
+  control-app:
+
     name: Check tests
+    
     runs-on: ubuntu-20.04
+    
     steps:
       - name: Checkout on master
         uses: actions/checkout@v3

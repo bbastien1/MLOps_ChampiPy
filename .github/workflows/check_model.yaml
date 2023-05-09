@@ -1,0 +1,32 @@
+name: Model perf tracker
+
+on: 
+  schedule:
+    - cron:  '15 12 */1 * *'
+
+env:
+  target_accuracy: ${{ vars.TARGET_ACCURACY }}
+  target_new_images: ${{ vars.TARGET_NEW_IMAGES }}
+
+jobs:
+  check-perf:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout on master
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@master
+        with:
+          python-version: "3.9.16"
+
+      - name: Install requirements
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f app/requirements.txt ]; then pip install -r app/requirements.txt; fi
+
+      - name: Run tests api perf
+        run: |
+          pytest test/api_test_perf.py $target_accuracy $target_new_images
