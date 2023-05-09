@@ -74,3 +74,5 @@ Lancement de pytest :
 >```python -m pytest test\database_test.py```
 
 >```python -m pytest test\predict_test.py```
+
+>```python -m pytest test\api_test.py -W ignore::DeprecationWarning```

@@ -22,7 +22,10 @@ from app.database.database import Database
 
 def load_model(model_name: str="VGG16", stage: str = "Production"):
 
-    mlruns_fld = os.path.realpath(os.path.join(SCRIPT_DIR, 'mlruns', 'models', model_name))
+    mlruns_fld = os.path.realpath(os.path.join(SCRIPT_DIR,
+                                               'mlruns',
+                                               'models',
+                                               model_name))
 
     for path, subdirs, files in os.walk(mlruns_fld):
         for name in files:    
@@ -44,7 +47,9 @@ def load_model(model_name: str="VGG16", stage: str = "Production"):
     
     model_fld_final = model_fld_deb + model_fld_fin
     model_fld_final = os.path.realpath(model_fld_final)
-    model_fld_final_tf = os.path.realpath(os.path.join(model_fld_final, "data", "model"))
+    model_fld_final_tf = os.path.realpath(os.path.join(model_fld_final,
+                                                       "data",
+                                                       "model"))
     print("Model folder:", model_fld_final_tf)
     #model = mlflow.pyfunc.load_model(model_fld_final)
 
@@ -91,7 +96,8 @@ def image_to_array(upload_file):
 def get_predictions(upload_file, nb_preds: int=1):
 
     # Check file type
-    if not upload_file.lower().endswith(('.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.gif')) :
+    if not upload_file.lower().endswith(('.png', '.jpg', '.jpeg',
+                                         '.tiff', '.bmp', '.gif')) :
         raise ValueError('The file must be an image')
     
     if not check_file(upload_file):
@@ -141,7 +147,9 @@ def get_accuracy():
 
 
 def get_eval_dataset(root_dir: str = ""):
-    '''Return the evaluation dataset. Splited from get_accuracy to retrieve the classe names for predictions'''
+    '''
+    Return the evaluation dataset.
+    '''
 
     root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
     data_dir = os.path.join(root_dir, 'predict', 'images_eval')
@@ -168,7 +176,10 @@ def get_classe_names():
 def get_model_date(model_name: str="VGG16", stage: str = "Production"):
 
     ret = None
-    mlruns_fld = os.path.realpath(os.path.join(SCRIPT_DIR, 'mlruns', 'models', model_name))
+    mlruns_fld = os.path.realpath(os.path.join(SCRIPT_DIR,
+                                               'mlruns',
+                                               'models',
+                                               model_name))
 
     for path, subdirs, files in os.walk(mlruns_fld):
         for name in files:    
