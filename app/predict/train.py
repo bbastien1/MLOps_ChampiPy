@@ -100,7 +100,9 @@ data_augmentation = tf.keras.Sequential([
     tf.keras.layers.RandomZoom(0.1)])
 
 preprocess_input = tf.keras.applications.vgg16.preprocess_input
-base_model = VGG16(weights='imagenet', input_shape=(img_height, img_width, 3), include_top=False)
+base_model = VGG16(weights='imagenet',
+                   input_shape=(img_height, img_width, 3),
+                   include_top=False)
 
 image_batch, label_batch = next(iter(train_ds))
 feature_batch = base_model(image_batch)
@@ -121,7 +123,9 @@ print(prediction_batch.shape)
 inputs = tf.keras.Input(shape=(img_height, img_width, 3))
 x = data_augmentation(inputs)
 x = preprocess_input(x)
-vgg = VGG16(weights='imagenet', input_shape=(img_height, img_width, 3), include_top=False, input_tensor=x)
+vgg = VGG16(weights='imagenet',
+            input_shape=(img_height, img_width, 3),
+            include_top=False, input_tensor=x)
 x = global_average_layer(vgg.output)
 x = tf.keras.layers.Dropout(0.2)(x)
 

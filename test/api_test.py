@@ -1,7 +1,6 @@
 import sys
 import os
 import pytest
-import json
 from httpx import AsyncClient, BasicAuth
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))

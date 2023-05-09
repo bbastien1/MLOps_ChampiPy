@@ -1,4 +1,4 @@
-name: Pytest control Predict and Database
+name: Pytest control Predict, Database and API
 on: push
 jobs:
   qa:
