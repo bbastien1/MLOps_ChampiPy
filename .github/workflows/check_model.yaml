@@ -1,7 +1,7 @@
 name: Model perf tracker
 
 on:
-  [workflow_dispatch, schedule]
+  workflow_dispatch:
   schedule:
     - cron:  '55 13 */1 * *'
 
@@ -30,4 +30,4 @@ jobs:
 
       - name: Run tests api perf
         run: |
-          pytest test/api_test_perf.py $target_accuracy $target_new_images
+          pytest test/api_test_perf.py
