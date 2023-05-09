@@ -1,7 +1,7 @@
 name: Model perf tracker
 
 on:
-  workflow_dispatch
+  [workflow_dispatch, schedule]
   schedule:
     - cron:  '55 13 */1 * *'
 
