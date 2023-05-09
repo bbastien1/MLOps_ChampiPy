@@ -2,7 +2,7 @@ name: Model perf tracker
 
 on: 
   schedule:
-    - cron:  '15 12 */1 * *'
+    - cron:  '55 13 */1 * *'
 
 env:
   target_accuracy: ${{ vars.TARGET_ACCURACY }}
