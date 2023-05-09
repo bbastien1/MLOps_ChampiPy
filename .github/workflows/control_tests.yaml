@@ -24,3 +24,7 @@ jobs:
       - name: Run tests predict
         run: |
           pytest test/predict_test.py
+
+      - name: Run tests api
+        run: |
+          pytest test/api_test.py
