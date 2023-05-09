@@ -30,7 +30,7 @@ jobs:
 
       - name: Run tests api perf
         run: |
-          pytest test/api_test_perf.py --html=report.html
+          pytest test/api_test_perf.py
 
         with:
           name: model_perf_tracker_log
