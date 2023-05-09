@@ -1,5 +1,6 @@
 .venv/
 MLOps_ChampiPy.code-workspace
+docker_image/chpy_api/app/
 _no_sync/
 
 ### Python ###
