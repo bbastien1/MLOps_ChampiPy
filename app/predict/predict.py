@@ -21,7 +21,9 @@ sys.path.append(os.path.dirname(SCRIPT_DIR))
 from database.database import Database
 
 def load_model(model_name: str="VGG16", stage: str = "Production"):
-
+    '''
+    Find the model to use according MLFlow
+    '''
     mlruns_fld = os.path.realpath(os.path.join(SCRIPT_DIR,
                                                'mlruns',
                                                'models',
@@ -51,7 +53,6 @@ def load_model(model_name: str="VGG16", stage: str = "Production"):
                                                        "data",
                                                        "model"))
     print("Model folder:", model_fld_final_tf)
-    #model = mlflow.pyfunc.load_model(model_fld_final)
 
     model = tf.keras.models.load_model(model_fld_final_tf)
     return model
@@ -88,7 +89,7 @@ def image_to_array(upload_file):
     else :
         img = Image.open(upload_file)
     
-    img = img.resize(size = (120,120), resample = Image.NEAREST)
+    img = img.resize(size = (160,160), resample = Image.NEAREST)
     img_array = image.img_to_array(img)
     return np.expand_dims(img_array, axis = 0) 
 
@@ -100,6 +101,7 @@ def get_predictions(upload_file, nb_preds: int=1):
                                          '.tiff', '.bmp', '.gif')) :
         raise ValueError('The file must be an image')
     
+    # Check if file exist
     if not check_file(upload_file):
         raise FileNotFoundError('file {} not found'.format(upload_file))
 
@@ -131,7 +133,9 @@ def get_predictions(upload_file, nb_preds: int=1):
 
 
 def get_accuracy():
-    '''Return the accuracy evaluated of the trained model'''
+    '''
+    Return the accuracy evaluated of the trained model
+    '''
 
     root_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
     
@@ -155,8 +159,8 @@ def get_eval_dataset(root_dir: str = ""):
     data_dir = os.path.join(root_dir, 'predict', 'images_eval')
     
     batch_size = 32
-    img_height = 120
-    img_width = 120
+    img_height = 160
+    img_width = 160
 
     # Evaluation Dataset
     eval_dataset = tf.keras.utils.image_dataset_from_directory(
@@ -172,6 +176,7 @@ def get_classe_names():
     
     chpy_db = Database()
     return chpy_db.get_param('class_names')
+
 
 def get_model_date(model_name: str="VGG16", stage: str = "Production"):
 

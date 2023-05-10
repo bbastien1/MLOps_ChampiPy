@@ -29,8 +29,8 @@ mlflow.tensorflow.autolog()
 tf.get_logger().setLevel('ERROR')
 
 batch_size = 32
-img_height = 120
-img_width = 120
+img_height = 160
+img_width = 160
 IMG_SIZE = (img_width, img_height)
 
 base_learning_rate = 0.001
@@ -134,7 +134,7 @@ model = tf.keras.Model(inputs, outputs)
 
 print("Trainable variables before :", len(model.trainable_variables))
 
-for layer in model.layers[0:-1]:
+for layer in model.layers[0:-4]:
     layer.trainable = False
 
 print("Trainable variables after :", len(model.trainable_variables))
@@ -150,16 +150,14 @@ early_stopping = EarlyStopping(monitor = 'val_loss',
 reduce_learning_rate = ReduceLROnPlateau(monitor = 'val_loss',
                                         min_delta = 0.05,
                                         patience = 3,
-                                        factor = 0.5, 
+                                        factor = 0.1, 
                                         cooldown = 4,
                                         verbose = 1)
 
-
+# Compilation
 model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=base_learning_rate),
             loss=tf.keras.losses.SparseCategoricalCrossentropy(),
             metrics=['accuracy'])
-
-# model.summary(show_trainable=True)
 
 
 history = model.fit(train_ds, 
@@ -170,14 +168,13 @@ history = model.fit(train_ds,
 
 
 # Courbe d'apprentissage
-
 acc = history.history['accuracy']
 val_acc = history.history['val_accuracy']
 
 loss = history.history['loss']
 val_loss = history.history['val_loss']
 
-fig = plt.figure(figsize=(20, 8))
+fig = plt.figure(figsize=(10, 4))
 plt.subplot(1, 2, 1)
 plt.plot(acc, label='Training Accuracy')
 plt.plot(val_acc, label='Validation Accuracy')
@@ -192,7 +189,6 @@ plt.legend(loc='upper right')
 plt.ylabel('Cross Entropy')
 plt.title('Training and Validation Loss')
 plt.xlabel('epoch')
-#plt.show()
 
-fig.savefig("train_VGG16plus2.png")
+fig.savefig("train_VGG16.png")
 plt.close(fig)

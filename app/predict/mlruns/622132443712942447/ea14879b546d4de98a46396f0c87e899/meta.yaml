@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/ea14879b546d4de98a46396f0c87e899/artifacts
+deleted_time: 1683650848333
+end_time: 1683649434877
+entry_point_name: ''
+experiment_id: '622132443712942447'
+lifecycle_stage: deleted
+run_id: ea14879b546d4de98a46396f0c87e899
+run_name: painted-grouse-624
+run_uuid: ea14879b546d4de98a46396f0c87e899
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1683649413876
+status: 3
+tags: []
+user_id: bburd

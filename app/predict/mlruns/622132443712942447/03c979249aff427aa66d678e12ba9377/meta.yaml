@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/03c979249aff427aa66d678e12ba9377/artifacts
+deleted_time: 1683649317632
+end_time: 1683648735948
+entry_point_name: ''
+experiment_id: '622132443712942447'
+lifecycle_stage: deleted
+run_id: 03c979249aff427aa66d678e12ba9377
+run_name: gaudy-mare-813
+run_uuid: 03c979249aff427aa66d678e12ba9377
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1683648284589
+status: 3
+tags: []
+user_id: bburd

@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/6ce147a3f3d648f7b38da0a4bad574eb/artifacts
+deleted_time: 1683649312012
+end_time: 1683649203669
+entry_point_name: ''
+experiment_id: '622132443712942447'
+lifecycle_stage: deleted
+run_id: 6ce147a3f3d648f7b38da0a4bad574eb
+run_name: debonair-fawn-413
+run_uuid: 6ce147a3f3d648f7b38da0a4bad574eb
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1683649147218
+status: 3
+tags: []
+user_id: bburd

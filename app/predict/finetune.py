@@ -42,8 +42,8 @@ def download_images_for_dataset(path:str, nb_img:int = 1000):
 
 def create_datasets(path:str = "",
                     ratio:float = 0.2,
-                    img_height:int = 120,
-                    img_width:int = 120,
+                    img_height:int = 160,
+                    img_width:int = 160,
                     batch_size:int = 32):
     
     # Train Dataset
@@ -184,7 +184,7 @@ def history_plot(history):
     loss = history.history['loss']
     val_loss = history.history['val_loss']
 
-    fig = plt.figure(figsize=(20, 8))
+    fig = plt.figure(figsize=(10, 4))
     plt.subplot(1, 2, 1)
     plt.plot(acc, label='Training Accuracy')
     plt.plot(val_acc, label='Validation Accuracy')

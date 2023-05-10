@@ -36,7 +36,7 @@ api = FastAPI(
         'description': 'Fonctions utilisées pour obtenir des prédictions'
     },
     {
-        'name': 'supervise',
+        'name': 'supervision',
         'description': 'Fonctions utilisées pour superviser le modèle'
     }
 ]
@@ -127,7 +127,7 @@ async def get_predict(file: str = "https://images.mushroomobserver.org/320/15362
             detail='Database connection failed')
     
 
-@api.get('/accuracy', tags=['supervise'])
+@api.get('/accuracy', tags=['supervision'])
 async def get_model_accuracy(user: str = Depends(get_current_user)):
     
     if not user['is_admin']:
@@ -144,7 +144,7 @@ async def get_model_accuracy(user: str = Depends(get_current_user)):
     
     return resp
 
-@api.get('/past_pred_acc', tags=['supervise'])
+@api.get('/past_pred_acc', tags=['supervision'])
 async def get_last_predictions_accuracy(nb_last_preds:int = 10, 
                                         user: str = Depends(get_current_user)):
     
@@ -162,7 +162,7 @@ async def get_last_predictions_accuracy(nb_last_preds:int = 10,
     
     return resp
 
-@api.get('/nb_new_img', tags=['supervise'])
+@api.get('/nb_new_img', tags=['supervision'])
 async def get_nb_new_images(model_name: str="VGG16", 
                             stage: str = "Production",
                             user: str = Depends(get_current_user)):
@@ -179,7 +179,7 @@ async def get_nb_new_images(model_name: str="VGG16",
     
     return nb_images
 
-@api.get('/finetune', tags=['supervise'])
+@api.get('/finetune', tags=['supervision'])
 async def fine_tune_model(model_name: str="VGG16", 
                           stage: str = "Production", 
                           variables:int = 2, 

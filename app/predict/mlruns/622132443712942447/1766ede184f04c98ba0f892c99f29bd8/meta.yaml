@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/Documents/Datascientest/MLOps/projet/MLOps_ChampiPy/app/predict/mlruns/622132443712942447/1766ede184f04c98ba0f892c99f29bd8/artifacts
+deleted_time: 1683650848335
+end_time: 1683649347316
+entry_point_name: ''
+experiment_id: '622132443712942447'
+lifecycle_stage: deleted
+run_id: 1766ede184f04c98ba0f892c99f29bd8
+run_name: capable-skunk-329
+run_uuid: 1766ede184f04c98ba0f892c99f29bd8
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1683649312051
+status: 3
+tags: []
+user_id: bburd

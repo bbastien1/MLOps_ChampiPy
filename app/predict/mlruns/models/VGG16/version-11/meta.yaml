@@ -1,8 +1,8 @@
 aliases: []
 creation_timestamp: 1683573369622
-current_stage: Production
+current_stage: Archived
 description: V9 + Fine tune
-last_updated_timestamp: 1683585615740
+last_updated_timestamp: 1683652621047
 name: VGG16
 run_id: ac7198501cdf4f6bb528ee92f2d95811
 run_link: ''
