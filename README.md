@@ -5,7 +5,7 @@
 ChampiPy est projet de Deep Learning permettant d’obtenir le nom d’une espèce de champignon grâce à une photo.
 Le modèle a été réalisée dans le cadre de la formation Data Scientist de Janvier 2022 par Romain COUSSY, Emeline SILVESTRE, Paul VENTURA et moi-même.
 
-L'objectifs (simulé) maintenant est de mettre ce modèle à disposition d'un groupe d'utilisateur confirmés sur https://mushroomobserver.org/ afin de vérifier les propositions des utilisateurs moins expérimentés.
+L'objectif (simulé) maintenant est de mettre ce modèle à disposition d'un groupe d'utilisateur confirmés sur https://mushroomobserver.org/ afin de vérifier les propositions des utilisateurs moins expérimentés.
 Plus particulièrement, à partir de l'URL d'une image, le modèle prédira l'espèce et indiquera le pourcentage de précision de cette prédiction.
 L'utilisateur à l'origine de cette demande, Bob, sera également l'administrateur de l'application.
 L'exploitation du ce modèle se fera, dans un premier temps, par l'intermédiaire d'une API.
@@ -95,7 +95,7 @@ L'entrainement du modèle est lancé manuellement via le script ```./app/predict
 Après avoir rattaché cette expérimentation au modèle VGG16, il est possible de lui attribuer une étape.
 Les fonctions de prédiction et de fine tuning se basent sur le modèle d'étape **production**, ces étapes sont directement accessibles via l'API.
 
-Le fine tunning crée une expérimentation également.
+Le fine tuning crée une expérimentation également.
 
 ### Gestion de l'API
 L'API est composée de 3 parties :
