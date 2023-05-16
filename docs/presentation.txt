@@ -1,0 +1,11 @@
+>> DOSKEY :
+doskey /macrofile=_no_sync\doskey.txt
+
+>> MLFLOW :
+cd app\predict
+mlflow ui
+http://127.0.0.1:5000
+
+>> API :
+uvicorn app.api.main:api --reload
+http://localhost:8000/docs
