@@ -15,7 +15,7 @@ class Database:
     fs = None
 
     def __init__(self):
-        CONNECTION_STRING = os.environ['BDD_CONNEX_STR']
+        CONNECTION_STRING = os.environ['bdd_connex_str']
         Database.client = MongoClient(CONNECTION_STRING)
         Database.DATABASE = Database.client.champipy_db
         Database.fs = gridfs.GridFS(Database.DATABASE, 'img_store')
