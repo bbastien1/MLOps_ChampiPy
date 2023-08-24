@@ -1,5 +1,9 @@
 name: Pytest control Predict, Database and API
 on: push
+
+env:
+  bdd_connex_str: ${{ vars.BDD_CONNEX_STR }}
+
 jobs:
   control-app:
 
