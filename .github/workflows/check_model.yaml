@@ -8,7 +8,7 @@ on:
 env:
   target_accuracy: ${{ vars.TARGET_ACCURACY }}
   target_new_images: ${{ vars.TARGET_NEW_IMAGES }}
-  bdd_connex_str: ${{ vars.BDD_CONNEX_STR }}
+  bdd_connex_str: ${{ secrets.BDD_CONNEX_STR }}
 
 jobs:
   check-perf:
